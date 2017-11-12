@@ -1,20 +1,30 @@
 import React, { Component } from 'react';
 import * as SpotifyWebApi from 'spotify-web-api-js';
 
-import { LOGIN_WINDOW_OPTIONS, LOGIN_URL } from '../constants/spotify';
+import { SpotifyService } from '../services/spotify';
 
 const spotify = new SpotifyWebApi();
+const spotifyService = new SpotifyService();
 
 export default class SpotifyPlayer extends Component {
-  openSpotifyLogin(url) {
-    window.open(url,
-      'Spotify',
-      LOGIN_WINDOW_OPTIONS
-     );
+  componentDidMount() {
+
   }
 
-  handleLogin = () => {
-    this.openSpotifyLogin(LOGIN_URL);
+  openSpotifyLogin() {
+    spotifyService.login((accessToken) => {
+      console.log(accessToken);
+    });
+        // getUserData(accessToken)
+        //     .then(function(response) {
+        //         loginButton.style.display = 'none';
+        //         resultsPlaceholder.innerHTML = template(response);
+        //     });
+        // }
+  }
+
+  handleLogin = async () => {
+    const loggedIn = await this.openSpotifyLogin();
   }
 
   render() {
